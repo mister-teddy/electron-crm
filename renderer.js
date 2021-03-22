@@ -4,3 +4,7 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+import App from './src/components/App.js'
+
+Object.keys(antd).forEach(key => window[key] = nojsx(antd[key]))
+ReactDOM.render(App(), document.querySelector('#app'));
