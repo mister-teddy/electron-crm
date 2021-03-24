@@ -14,7 +14,9 @@
         let registeredProps = {}
 
         function Tag(...children) {
-            return React.createElement(tag, registeredProps, ...children)
+            const el = React.createElement(tag, registeredProps, ...children)
+            registeredProps = {}
+            return el
         }
         Tag.props = function (props) {
             Object.assign(registeredProps, props)

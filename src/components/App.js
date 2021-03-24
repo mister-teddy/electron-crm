@@ -1,34 +1,43 @@
+import usePersistence from '../hooks/usePersistence.js'
 import CreateInvoice from './CreateInvoice.js'
+import CreateCustomer from './CreateCustomer.js'
+import Customer from './Customer.js'
 
 const App = props => {
-    const [invoices, setInvoices] = useState([]);
+    const [customers, setCustomers] = usePersistence([], 'customers')
+    const pushCustomer = customer => setCustomers(customers.concat(customer))
+    const deleteCustomer = customer => setCustomers(customers.filter(c => c !== customer))
+    const [invoices, setInvoices] = usePersistence([], 'invoices')
     const pushInvoice = invoice => setInvoices(invoices.concat(invoice))
+    const deleteInvoice = invoice => setInvoices(invoices.filter(i => i !== invoice))
+    const [currentCustomer, setCurrentCustomer] = useState(customers[0])
 
     useEffect(() => {
-        let savedInvoices = localStorage.getItem('invoices')
-        if (savedInvoices) {
-            savedInvoices = JSON.parse(savedInvoices)
-            setInvoices(savedInvoices)
+        if (customers.length) {
+            setCurrentCustomer(customers[customers.length - 1])
         }
-    }, [])
+    }, [customers])
 
-    useEffect(() => {
-        localStorage.setItem('invoices', JSON.stringify(invoices))
-    }, [invoices])
-
-    return Row.props({ gutter: 16 })(
-        Col.props({ span: 24 })(
-            Avatar.props({ style: { backgroundColor: '#87d068' }, size: 64 })('U'),
-            Avatar.props({ style: { backgroundColor: '#1890ff' }, size: 64 })('U')
-        ),
-        invoices.map(invoice => Col.props({ span: 6 })(
-            Card.props({ title: invoice.title, actions: [Button('Download')] })(
-                invoice.description
+    return Row.props({ gutter: [16, 16], style: { padding: 16 } })(
+        Col.props({ span: 24, align: 'center' })(
+            Space(
+                customers.map((customer, i) => Customer.key(i).props({ customer, deleteCustomer, setCurrentCustomer })()),
+                CreateCustomer.props({ push: pushCustomer })()
             )
-        )),
-        Col.props({ span: 24 })(
-            CreateInvoice.props({ push: pushInvoice })(),
-        )
+        ),
+        currentCustomer && Col.props({ span: 24, align: 'center' })(
+            Table.props({
+                columns: [
+                    { title: 'Title', dataIndex: 'title' },
+                    { title: 'Hours', dataIndex: 'hours' },
+                    { title: 'Rate', dataIndex: 'rate' },
+                    { title: 'Delete', key: 'delete', render: item => Popconfirm.props({ title: 'Are you sure to delete this invoice?', onConfirm: () => deleteInvoice(item) })(Button.props({ type: 'link', danger: true })('Delete')), align: 'center' },
+                    { title: 'Export', key: 'export', render: item => Button('Export'), fixed: 'right', align: 'center' },
+                ],
+                dataSource: invoices.filter(i => i.customer === currentCustomer.name),
+            })(),
+            CreateInvoice.props({ pushInvoice, customer: currentCustomer })()
+        ),
     )
 }
 
