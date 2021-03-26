@@ -2,6 +2,7 @@ import usePersistence from '../hooks/usePersistence.js'
 import CreateInvoice from './CreateInvoice.js'
 import CreateCustomer from './CreateCustomer.js'
 import Customer from './Customer.js'
+import ExportPdf from './ExportPdf.js'
 
 const App = props => {
     const [customers, setCustomers] = usePersistence([], 'customers')
@@ -32,9 +33,9 @@ const App = props => {
                     { title: 'Hours', dataIndex: 'hours' },
                     { title: 'Rate', dataIndex: 'rate' },
                     { title: 'Delete', key: 'delete', render: item => Popconfirm.props({ title: 'Are you sure to delete this invoice?', onConfirm: () => deleteInvoice(item) })(Button.props({ type: 'link', danger: true })('Delete')), align: 'center' },
-                    { title: 'Export', key: 'export', render: item => Button('Export'), fixed: 'right', align: 'center' },
+                    { title: 'Export', key: 'export', render: item => ExportPdf.props({ invoice: item })(), fixed: 'right', align: 'center' },
                 ],
-                dataSource: invoices.filter(i => i.customer === currentCustomer.name),
+                dataSource: invoices.filter(i => i.customer.name === currentCustomer.name),
             })(),
             CreateInvoice.props({ pushInvoice, customer: currentCustomer })()
         ),

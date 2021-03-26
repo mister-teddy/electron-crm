@@ -1,4 +1,5 @@
 const FormItem = nojsx(antd.Form.Item)
+const TextArea = nojsx(antd.Input.TextArea)
 
 function getBase64(img, callback) {
     const reader = new FileReader();
@@ -36,9 +37,10 @@ export default nojsx(props => {
     };
 
     const [form] = antd.Form.useForm();
-    const onFinish = ({ name }) => {
+    const onFinish = ({ name, description }) => {
         props.push({
             name,
+            description,
             avatar: imageUrl,
             createdDate: moment(),
         })
@@ -64,6 +66,9 @@ export default nojsx(props => {
             })(
                 FormItem.props({ name: 'name', label: 'Customer Name', rules: [{ required: true }] })(
                     Input()
+                ),
+                FormItem.props({ name: 'description', label: 'Description ', initialValue: '' })(
+                    TextArea()
                 ),
                 FormItem.props({ name: 'avatar', label: 'Description ', initialValue: '' })(
                     Upload.props({
