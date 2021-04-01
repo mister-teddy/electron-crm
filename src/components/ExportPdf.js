@@ -17,7 +17,7 @@ const light = {
 
 const moneyFormat = money => `$${money.toFixed(1)}`
 
-export default nojsx(({ invoice }) => {
+export default nojsx(({ invoice, config }) => {
     const { title, description, customer, createdDate, range, hours, rate } = invoice
     const createdMoment = moment(createdDate)
 
@@ -38,10 +38,8 @@ export default nojsx(({ invoice }) => {
             title:
                 Row(
                     Col.style({ fontSize: 14 }).props({ span: 12 })(
-                        b('Nguyen Hong Phat'),
-                        div.style(light)('Email: hongphat.js@gmail.com'),
-                        div.style(light)('Phone: +84589424815'),
-                        div.style(light)('Address: 267/31, Square 4, Area A, Hau Nghia Town, Duc Hoa District, Long An Province, Viet Nam')
+                        b(config.name),
+                        div.style({ ...pre, ...light })(config.information)
                     ),
                     Col.props({ span: 12, align: 'right' }).style({ paddingTop: 12 })(
                         span.style({ fontSize: 60, fontWeight: 300 })('INVOICE'),
