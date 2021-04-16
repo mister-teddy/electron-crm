@@ -41,11 +41,10 @@ export default nojsx(({ pushInvoice, customer }) => {
                 ),
                 FormItem.props({ name: 'rate', label: 'Rate', initialValue: 10 })(
                     Select(
-                        Option(10),
-                        Option(15),
+                        [...Array(6).keys()].map(i => Option(i + 10))
                     )
                 ),
-                FormItem.props({ name: 'range', label: 'Description ', initialValue: [moment().startOf('isoWeek'), moment()] })(
+                FormItem.props({ name: 'range', label: 'Working days', initialValue: [moment().startOf('isoWeek'), moment()] })(
                     RangePicker()
                 ),
                 FormItem.props({ name: 'description', label: 'Description ', initialValue: '' })(
