@@ -1,5 +1,4 @@
 const FormItem = nojsx(antd.Form.Item)
-const Option = value => nojsx(antd.Select.Option).props({ value })(value)
 const TextArea = nojsx(antd.Input.TextArea)
 const RangePicker = nojsx(antd.DatePicker.RangePicker)
 
@@ -40,9 +39,7 @@ export default nojsx(({ pushInvoice, customer }) => {
                     InputNumber()
                 ),
                 FormItem.props({ name: 'rate', label: 'Rate', initialValue: 10 })(
-                    Select(
-                        [...Array(11).keys()].map(i => Option(i + 10))
-                    )
+                    InputNumber()
                 ),
                 FormItem.props({ name: 'range', label: 'Working days', initialValue: [moment().subtract(6, 'days'), moment()] })(
                     RangePicker()
