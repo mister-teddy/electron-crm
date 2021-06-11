@@ -43,7 +43,7 @@ export default nojsx(({ invoice, config }) => {
                     ),
                     Col.props({ span: 12, align: 'right' }).style({ paddingTop: 12 })(
                         span.style({ fontSize: 60, fontWeight: 300 })('INVOICE'),
-                        div.style({ fontSize: 24, color: '#AAA' })('#' + createdMoment.format('DDMMYYYY')),
+                        div.style({ fontSize: 24, color: '#AAA' })('#' + (config.prefix ?? '') + createdMoment.format('DDMMYYYY')),
                     )
                 ),
             visible, onClick: window.print, width: '100vw', closable: false, onClose: () => setVisible(false)

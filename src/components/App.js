@@ -40,7 +40,7 @@ const App = props => {
                 ],
                 dataSource: invoices.filter(i => i.customer.name === currentCustomer.name),
             })(),
-            CreateInvoice.props({ pushInvoice, customer: currentCustomer })()
+            CreateInvoice.props({ pushInvoice, customer: currentCustomer, config })()
         ),
     )
 }

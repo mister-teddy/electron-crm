@@ -2,10 +2,10 @@ const FormItem = nojsx(antd.Form.Item)
 const TextArea = nojsx(antd.Input.TextArea)
 const RangePicker = nojsx(antd.DatePicker.RangePicker)
 
-export default nojsx(({ pushInvoice, customer }) => {
+export default nojsx(({ pushInvoice, customer, config }) => {
     const [form] = antd.Form.useForm();
     const createdDate = moment()
-    const title = `Invoice #${moment().format('DDMMYYYY')}`
+    const title = `Invoice #${config.prefix ?? ''}${moment().format('DDMMYYYY')}`
     const onFinish = values => {
         const { name, description } = customer
         pushInvoice({

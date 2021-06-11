@@ -36,6 +36,9 @@ export default nojsx(({ config, setConfig }) => {
                 FormItem.props({ name: 'information', label: 'Information', initialValue: '' })(
                     TextArea()
                 ),
+                FormItem.props({ name: 'prefix', label: 'ID Prefix', initialValue: '' })(
+                    Input()
+                ),
             )
         )
     )
