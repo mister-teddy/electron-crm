@@ -17,7 +17,7 @@ const App = props => {
 
     useEffect(() => {
         if (customers.length) {
-            setCurrentCustomer(customers[customers.length - 1])
+            setCurrentCustomer(customers[0])
         }
     }, [customers])
 
@@ -32,9 +32,9 @@ const App = props => {
         currentCustomer && Col.props({ span: 24, align: 'center' })(
             Table.props({
                 columns: [
-                    { title: 'Title', dataIndex: 'title' },
-                    { title: 'Hours', dataIndex: 'hours' },
-                    { title: 'Rate', dataIndex: 'rate' },
+                    { title: 'Title', dataIndex: 'title', sorter: (a, b) => a.createdDate > b.createdDate ? 1 : -1, defaultSortOrder: 'descend' },
+                    { title: 'Hours', dataIndex: 'hours', sorter: (a, b) => a.hours > b.hours ? 1 : -1 },
+                    { title: 'Rate', dataIndex: 'rate', sorter: (a, b) => a.rate > b.rate ? 1 : -1 },
                     { title: 'Delete', key: 'delete', render: item => Popconfirm.props({ title: 'Are you sure to delete this invoice?', onConfirm: () => deleteInvoice(item) })(Button.props({ type: 'link', danger: true })('Delete')), align: 'center' },
                     { title: 'Export', key: 'export', render: item => ExportPdf.props({ invoice: item, config })(), fixed: 'right', align: 'center' },
                 ],
