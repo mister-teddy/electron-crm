@@ -10,7 +10,7 @@ const App = props => {
     const pushCustomer = customer => setCustomers(customers.concat(customer))
     const deleteCustomer = customer => setCustomers(customers.filter(c => c !== customer))
     const [invoices, setInvoices] = usePersistence([], 'invoices')
-    const pushInvoice = invoice => setInvoices(invoices.concat(invoice))
+    const pushInvoice = invoice => setInvoices([invoice].concat(invoices))
     const deleteInvoice = invoice => setInvoices(invoices.filter(i => i !== invoice))
     const [currentCustomer, setCurrentCustomer] = useState(customers[0])
     const [config, setConfig] = usePersistence({}, 'config')
