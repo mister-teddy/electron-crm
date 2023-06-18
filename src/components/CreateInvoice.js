@@ -7,10 +7,10 @@ export default nojsx(({ pushInvoice, customer, config }) => {
   const createdDate = moment();
   const title = `Invoice #${config.prefix ?? ""}${moment().format("DDMMYYYY")}`;
   const onFinish = (values) => {
-    const { name, description } = customer;
+    const { name, description, currency } = customer;
     pushInvoice({
       ...values,
-      customer: { name, description },
+      customer: { name, description, currency },
       title,
       createdDate,
     });

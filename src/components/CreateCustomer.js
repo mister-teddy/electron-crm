@@ -37,10 +37,11 @@ export default nojsx((props) => {
   };
 
   const [form] = antd.Form.useForm();
-  const onFinish = ({ name, description }) => {
+  const onFinish = ({ name, description, currency }) => {
     props.push({
       name,
       description,
+      currency,
       avatar: imageUrl,
       createdDate: moment(),
     });
@@ -75,12 +76,17 @@ export default nojsx((props) => {
         })(Input()),
         FormItem.props({
           name: "description",
-          label: "Description ",
+          label: "Description",
           initialValue: "",
         })(TextArea()),
         FormItem.props({
+          name: "currency",
+          label: "Currency Unit",
+          rules: [{ required: false }],
+        })(Input()),
+        FormItem.props({
           name: "avatar",
-          label: "Description ",
+          label: "Avatar",
           initialValue: "",
         })(
           Upload.props({

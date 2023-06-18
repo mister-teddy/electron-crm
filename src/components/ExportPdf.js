@@ -15,11 +15,16 @@ const light = {
   fontWeight: "normal",
 };
 
-const moneyFormat = (money) => `$${money.toFixed(1)}`;
-
 export default nojsx(({ invoice, config }) => {
   const { title, description, customer, createdDate, range, hours, rate } =
     invoice;
+  const moneyFormat = (money) =>
+    customer.currency
+      ? `${String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${
+          customer.currency
+        }`
+      : `$${money.toFixed(1)}`;
+
   const createdMoment = moment(createdDate);
 
   const [visible, setVisible] = useState(false);
