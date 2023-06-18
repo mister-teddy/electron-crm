@@ -1,5 +1,5 @@
-.printable .ant-table-thead>tr>th {
-    background-color: #333;
-    color: white;
-    -webkit-print-color-adjust: exact;
+.printable .ant-table-thead > tr > th {
+  background-color: #333;
+  color: white;
+  -webkit-print-color-adjust: exact;
 }

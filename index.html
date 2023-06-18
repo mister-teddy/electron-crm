@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; img-src 'self' data:"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; img-src 'self' data:"
+    />
+    <title>Electron CRM</title>
+    <link rel="stylesheet" href="./libs/antd.min.css" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:">
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'; img-src 'self' data:">
-  <title>Electron CRM</title>
-  <link rel="stylesheet" href="./libs/antd.min.css">
-  <link rel="stylesheet" href="./src/style.css">
-</head>
+  <body>
+    <div id="app"></div>
 
-<body>
-  <div id="app"></div>
-
-  <script src="./libs/react.development.js"></script>
-  <script src="./libs/react-dom.development.js"></script>
-  <script src="./libs/moment.js"></script>
-  <script src="./libs/antd.min.js"></script>
-  <script src="./libs/no-jsx.js"></script>
-  <script src="./renderer.js" type="module"></script>
-</body>
-
+    <script src="./libs/react.development.js"></script>
+    <script src="./libs/react-dom.development.js"></script>
+    <script src="./libs/moment.js"></script>
+    <script src="./libs/antd.min.js"></script>
+    <script src="./libs/no-jsx.js"></script>
+    <script src="./renderer.js" type="module"></script>
+  </body>
 </html>
