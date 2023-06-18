@@ -37,11 +37,11 @@ export default nojsx((props) => {
   };
 
   const [form] = antd.Form.useForm();
-  const onFinish = ({ name, description, currency }) => {
+  const onFinish = ({ name, description, lang }) => {
     props.push({
       name,
       description,
-      currency,
+      lang,
       avatar: imageUrl,
       createdDate: moment(),
     });
@@ -80,10 +80,23 @@ export default nojsx((props) => {
           initialValue: "",
         })(TextArea()),
         FormItem.props({
-          name: "currency",
-          label: "Currency Unit",
-          rules: [{ required: false }],
-        })(Input()),
+          name: "lang",
+          label: "Language",
+          rules: [{ required: true }],
+        })(
+          Select.props({
+            options: [
+              {
+                value: "vi",
+                label: "Tiếng Việt",
+              },
+              {
+                value: "en",
+                label: "English",
+              },
+            ],
+          })()
+        ),
         FormItem.props({
           name: "avatar",
           label: "Avatar",

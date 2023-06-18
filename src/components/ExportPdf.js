@@ -18,11 +18,10 @@ const light = {
 export default nojsx(({ invoice, config }) => {
   const { title, description, customer, createdDate, range, hours, rate } =
     invoice;
+  const vi = customer.lang === "vi";
   const moneyFormat = (money) =>
-    customer.currency
-      ? `${String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}${
-          customer.currency
-        }`
+    vi
+      ? `${String(money).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}đ`
       : `$${money.toFixed(1)}`;
 
   const createdMoment = moment(createdDate);
@@ -61,18 +60,20 @@ export default nojsx(({ invoice, config }) => {
     })(
       Row(
         Col.props({ span: 12 })(
-          div("Bill To:"),
+          div(vi ? "Khách hàng" : "Bill To:"),
           b(customer.name),
           div.style(pre)(customer.description)
         ),
         Col.props({ span: 4, align: "right" })(
-          div.style(light)("Date:"),
-          div.style(lightBackground)("Balance Due:")
+          div.style(light)(vi ? "Ngày" : "Date:"),
+          div.style(lightBackground)(vi ? "Tổng cộng" : "Balance Due:")
         ),
         Col.props({ span: 8, align: "right" })(
           div(
             span.style({ paddingRight: 8 })(
-              moment(createdDate).format("MMM DD, YYYY")
+              vi
+                ? moment(createdDate).format("DD/MM/YYYY")
+                : moment(createdDate).format("MMM DD, YYYY")
             )
           ),
           div.style(lightBackground)(
@@ -83,27 +84,29 @@ export default nojsx(({ invoice, config }) => {
       Table.props({
         columns: [
           {
-            title: "Item",
+            title: vi ? "Nội dung" : "Item",
             key: "item",
             render: (_) =>
               p(
-                b(
-                  range
-                    .map((date) => moment(date).format("MMMM Do (dddd)"))
-                    .join(" - ") + ":"
-                ),
+                vi
+                  ? null
+                  : b(
+                      range
+                        .map((date) => moment(date).format("MMMM Do (dddd)"))
+                        .join(" - ") + ":"
+                    ),
                 div.style(pre)(description)
               ),
           },
-          { title: "Hours", dataIndex: "hours" },
+          { title: vi ? "Giờ" : "Hours", dataIndex: "hours" },
           {
-            title: "Rate",
+            title: vi ? "Đơn giá" : "Rate",
             dataIndex: "rate",
             render: moneyFormat,
             align: "right",
           },
           {
-            title: "Amount",
+            title: vi ? "Thành tiền" : "Amount",
             render: (item) => moneyFormat(item.hours * item.rate),
             align: "right",
           },
@@ -114,7 +117,9 @@ export default nojsx(({ invoice, config }) => {
         margin: "64px 0",
       })(),
       Row(
-        Col.props({ span: 4, offset: 16 }).style(light)("Total: "),
+        Col.props({ span: 4, offset: 16 }).style(light)(
+          vi ? "Tổng cộng" : "Total: "
+        ),
         Col.props({ span: 4, align: "right" }).style({ paddingRight: 8 })(
           moneyFormat(hours * rate)
         )
